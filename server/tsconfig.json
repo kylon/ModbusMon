@@ -1,0 +1,70 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2022",
+    "sourceMap": false,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": true,
+    "strict": true,
+    "outDir": "../dist/server"
+  },
+  "files": [
+    "src/types/Aliases.d.ts",
+    "src/types/App.d.ts",
+    "src/types/Config.d.ts",
+    "src/types/Configuration.d.ts",
+    "src/types/CommonWorkers.d.ts",
+    "src/types/DatabaseWorker.d.ts",
+    "src/types/MonitorWorker.d.ts",
+    "src/types/OrchestratorWorker.d.ts",
+    "src/types/ParseConfigWorker.d.ts",
+    "src/types/LoggerWorker.d.ts",
+    "src/types/Request.d.ts",
+
+    "src/enums/registerSize.ts",
+    "src/enums/registerSizeOf.ts",
+    "src/enums/registerType.ts",
+    "src/enums/opCMD.ts",
+
+    "src/fn/UtilsFn.ts",
+    "src/fn/CustomFn.ts",
+    "src/fn/ZcsFn.ts",
+    "src/fn/Functions.ts",
+
+    "src/logger.ts",
+    "src/configuration.ts",
+    "src/utils.ts",
+
+    "src/modbusTcp/enums/functionCode.ts",
+    "src/modbusTcp/enums/tcpPacketOffset.ts",
+    "src/modbusTcp/enums/tcpPacketResponseOffset.ts",
+    "src/modbusTcp/enums/sockWrkCmd.ts",
+    "src/modbusTcp/modbusTcpSocket.ts",
+    "src/modbusTcp/socketWrk.ts",
+    "src/modbusTcp/types/SocketWorker.d.ts",
+
+    "src/workers/loggerWrk.ts",
+    "src/workers/parseConfigWrk.ts",
+    "src/workers/registersMonitorWrk.ts",
+    "src/workers/orchestratorWrk.ts",
+    "src/workers/databaseWrk.ts",
+
+    "src/app.ts",
+    "src/server.ts",
+    "tools/haToModbmon.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

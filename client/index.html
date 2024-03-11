@@ -1,0 +1,299 @@
+<!--
+  modbusmon
+  Copyright (C) 2024  kylon
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ModbusMon</title>
+  </head>
+
+  <body class="relative bg-indigo-1000">
+    <div id="loading-scr" class="absolute flex flex-col h-screen w-screen justify-center items-center text-white z-[999] bg-black bg-opacity-50">
+      <div class="inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] text-primary opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]" role="status">
+        <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col xl:min-h-screen xl:max-h-screen">
+      <div class="flex flex-col-reverse gap-y-4 p-2 mb-5 xl:justify-between xl:flex-row xl:gap-y-0">
+        <div id="header-info" class="flex flex-row flex-wrap gap-3 font-bold"></div>
+
+        <div id="menu-btn" role="button" class="flex flex-row justify-end items-center underline underline-offset-4 decoration-white/30 text-white hover:decoration-white" data-te-toggle="modal" data-te-target="#menu">
+          <i class="bi bi-list"></i> <span>Menù</span>
+        </div>
+      </div>
+
+      <div id="main-cont" class="flex flex-col p-1 gap-4 max-h-full overflow-hidden xl:flex-row"></div>
+
+      <div id="toast-notf" class="hidden absolute z-[1001] right-3 bottom-3 pointer-events-auto mx-auto w-auto max-w-[30%] rounded-lg bg-indigo-600 bg-clip-padding text-sm shadow-lg shadow-black/5 data-[te-toast-show]:block data-[te-toast-hide]:hidden" role="alert" data-te-toast-init>
+        <div class="flex items-center justify-between rounded-t-lg bg-clip-padding px-4 pb-2 pt-2.5">
+          <p id="toast-title" class="font-bold text-white"></p>
+          <div class="flex items-center text-white">
+            <button type="button" class="ml-2 box-content rounded-none border-none opacity-80 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none" data-te-toast-dismiss aria-label="Close">
+              <span class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div id="toast-cont" class="break-words rounded-b-lg bg-indigo-800 px-4 py-4 text-white"></div>
+      </div>
+    </div>
+
+    <template id="header-info-lbl">
+      <p class="tcont text-white">
+        <i class="bi"></i> <span class="hlabel"></span>: <span class="hvar italic"></span>
+      </p>
+    </template>
+
+    <template id="registers-panel">
+      <div class="flex-1">
+        <p class="rp-label text-white p-3 font-bold text-center bg-indigo-700 rounded-t-lg"></p>
+        <div class="rp-cont overflow-y-auto xl:max-h-rpcont-vh"></div>
+      </div>
+    </template>
+
+    <template id="no-regs-data-panel-item">
+      <div class="p-2 text-center bg-indigo-900 text-white">
+        <p>No data available</p>
+      </div>
+    </template>
+
+    <template id="register-panel-item">
+      <div role="button" class="flex flex-col border-b border-blue-960 bg-indigo-900 text-white hover:bg-indigo-800 gap-y-px">
+        <p class="m-0 break-words text-left pl-1 pt-1"><span class="rpi-lbl"></span></p>
+
+        <div class="flex flex-row justify-between">
+          <div class="act-bnts">
+            <div role="button" class="flex flex-row">
+              <div class="rpi-v-rfrsh bg-indigo-950 hover:bg-indigo-1000 active:bg-indigo-1000 focus:bg-indigo-960 pl-2 pr-2 pt-0.5 pb-0.5"><div class="rpi-v-rfrsh anim"><i class="rpi-v-rfrsh bi bi-arrow-clockwise text-lg"></i></div></div>
+              <div class="rpi-sort bg-indigo-950 hover:bg-indigo-1000 active:bg-indigo-1000 focus:bg-indigo-960 pl-2 pr-2 pt-0.5 pb-0.5 flex items-center"><i class="rpi-sort"></i></div>
+            </div>
+          </div>
+          <p class="m-0 break-words pr-1 pt-1"><span class="rpi-val"></span></p>
+        </div>
+      </div>
+    </template>
+
+    <template id="inveter-ui">
+      <div id="invui" class="relative ml-auto mr-auto w-fit text-white order-first xl:order-none">
+        <div class="absolute 3xl:text-2xl 4xl:text-3xl left-[5rem] top-[1rem] md:left-[7rem] md:top-[2.5rem] lg:left-[8rem] xl:left-[5.2rem] xl:top-[1.4rem] 2xl:left-[8.2rem] 2xl:top-[2.6rem] 3xl:left-[12.2rem] 3xl:top-[4.6rem] 4xl:left-[18.2rem] 4xl:top-[7.6rem]">
+          <span id="invui-pv">0.00</span> Kw
+        </div>
+        <div class="absolute 3xl:text-2xl 4xl:text-3xl left-[5rem] top-[6.4rem] md:left-[7rem] md:top-[10.2rem] lg:left-[8rem] xl:left-[5.2rem] xl:top-[7rem] 2xl:left-[8.2rem] 2xl:top-[10.9rem] 3xl:left-[12.2rem] 3xl:top-[16.8rem] 4xl:left-[18.2rem] 4xl:top-[25.8rem]">
+          <span id="invui-batt">0.00</span> Kw
+        </div>
+        <div class="absolute hidden 3xl:text-2xl 4xl:text-3xl left-[5rem] top-[8.75rem] md:left-[7rem] md:top-[12.4rem] lg:left-[8rem] xl:left-[5.2rem] xl:top-[9.1rem] 2xl:left-[8.2rem] 2xl:top-[13.1rem] 3xl:left-[12.2rem] 3xl:top-[19.6rem] 4xl:left-[18.2rem] 4xl:top-[29.3rem]">
+          <span id="invui-battv">0.00</span> V
+        </div>
+        <div class="absolute 3xl:text-2xl 4xl:text-3xl right-[4rem] top-[1rem] md:right-[7rem] md:top-[2.3rem] lg:right-[7rem] xl:right-[4.6rem] xl:top-[1.4rem] 2xl:right-[7.6rem] 2xl:top-[2.6rem] 3xl:top-[4.3rem] 3xl:right-[11.6rem] 4xl:right-[16.6rem] 4xl:top-[7.2rem]">
+          <span id="invui-grid">0.00</span> Kw
+        </div>
+        <div class="absolute hidden 3xl:text-2xl 4xl:text-3xl right-[4rem] top-[3.75rem] md:right-[7rem] md:top-[4.5rem] lg:right-[7rem] xl:right-[4.6rem] xl:top-[3.5rem] 2xl:right-[7.6rem] 2xl:top-[4.7rem] 3xl:right-[11.6rem] 3xl:top-[7rem] 4xl:right-[16.6rem] 4xl:top-[10.4rem]">
+          <span id="invui-gridhz">0.00</span> Hz
+        </div>
+        <div class="absolute 3xl:text-2xl 4xl:text-3xl right-[4rem] top-[6.5rem] md:right-[7rem] md:top-[10.2rem] lg:right-[7rem] lg:top-[10.1rem] xl:right-[4.6rem] xl:top-[7rem] 2xl:right-[7.6rem] 2xl:top-[10.8rem] 3xl:right-[11.6rem] 3xl:top-[16.8rem] 4xl:right-[16.6rem] 4xl:top-[25.8rem]">
+          <span id="invui-load">0.00</span> Kw
+        </div>
+
+        <span id="invui-pv-ar" class="hidden absolute left-[5rem] top-[2.3rem] md:left-[7rem] md:top-[3.6rem] lg:left-[8rem] 3xl:text-xl 4xl:text-2xl xl:left-[5rem] xl:top-[2.5rem] 2xl:left-[8rem] 2xl:top-[3.95rem] 3xl:left-[12rem] 3xl:top-[6.15rem] 4xl:left-[19rem] 4xl:top-[9.45rem] animate-[slide-out-right_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-right-fill text-warning"></i></span>
+
+        <span id="invui-batt-ar" class="hidden absolute left-[5rem] top-[7.6rem] md:left-[7rem] md:top-[11.25rem] lg:left-[8rem] 3xl:text-xl 4xl:text-2xl xl:left-[5rem] xl:top-[8.09rem] 2xl:left-[8rem] 2xl:top-[12.09rem] 3xl:left-[12rem] 3xl:top-[18.3rem] 4xl:left-[19rem] 4xl:top-[27.7rem] animate-[slide-out-right_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-right-fill text-warning"></i></span>
+        <span id="invui-batt-al" class="hidden absolute left-[6.6rem] top-[7.6rem] md:left-[9rem] md:top-[11.25rem] lg:left-[9rem] 3xl:text-xl 4xl:text-2xl xl:left-[7rem] xl:top-[8.09rem] 2xl:left-[10rem] 2xl:top-[12.09rem] 3xl:left-[14rem] 3xl:top-[18.3rem] 4xl:left-[22rem] 4xl:top-[27.7rem] animate-[slide-out-left_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-left-fill text-warning"></i></span>
+
+        <span id="invui-grid-ar" class="hidden absolute right-[6rem] top-[2.2rem] md:right-[9rem] md:top-[3.45rem] lg:right-[9rem] 3xl:text-xl 4xl:text-2xl xl:right-[7rem] xl:top-[2.3rem] 2xl:right-[10rem] 2xl:top-[3.7rem] 3xl:right-[14rem] 3xl:top-[5.8rem] 4xl:right-[20rem] 4xl:top-[8.95rem] animate-[slide-out-right_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-right-fill text-warning"></i></span>
+        <span id="invui-grid-al" class="hidden absolute right-[5rem] top-[2.2rem] md:right-[7rem] md:top-[3.45rem] lg:right-[7rem] 3xl:text-xl 4xl:text-2xl xl:right-[5rem] xl:top-[2.3rem] 2xl:right-[8rem] 2xl:top-[3.7rem] 3xl:right-[12rem] 3xl:top-[5.8rem] 4xl:right-[17rem] 4xl:top-[8.95rem] animate-[slide-out-left_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-left-fill text-warning"></i></span>
+
+        <span id="invui-load-ar" class="hidden absolute right-[6rem] top-[7.6rem] md:right-[9rem] md:top-[11.25rem] lg:right-[9rem] 3xl:text-xl 4xl:text-2xl xl:right-[7rem] xl:top-[8.09rem] 2xl:right-[10rem] 2xl:top-[12.09rem] 3xl:right-[14rem] 3xl:top-[18.3rem] 4xl:right-[20rem] 4xl:top-[27.7rem] animate-[slide-out-right_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-right-fill text-warning"></i></span>
+
+        <img class="w-[27rem] h-[10.5rem] md:w-[37.5rem] md:h-[15rem] xl:h-44 xl:w-[442px] 2xl:w-[40rem] 2xl:h-[16rem] 3xl:w-[60rem] 3xl:h-[24rem] 4xl:w-[90rem] 4xl:h-[36rem]" role="img" src="inverter-bat.svg" alt="inverter icon" height="600" width="600">
+      </div>
+    </template>
+
+    <template id="modal">
+      <div data-te-modal-init class="fixed left-0 top-0 hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none" tabindex="-1" aria-hidden="true">
+        <div data-te-modal-dialog-ref class="shadow-full-box pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out">
+          <div class="mcont pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-indigo-800 bg-clip-padding text-current outline-none">
+            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md p-4 bg-indigo-600 text-white">
+              <h5 class="mtitle flex items-center text-xl font-medium leading-normal gap-1"><span class="mtitle-tx"></span></h5>
+
+              <button type="button" class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none" data-te-modal-dismiss aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="mbody relative flex flex-col grow text-white" data-te-modal-body-ref></div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="modal-loading">
+      <div class="loadscr absolute z-[99] top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 text-center pt-5 pb-4 hidden">
+        <div class="inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] text-warning opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]" role="status">
+          <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+        </div>
+      </div>
+    </template>
+
+    <template id="modal-menu-body">
+      <div class="flex flex-col p-4" role="group">
+        <span data-te-modal-dismiss>
+          <button class="rounded-t-lg w-full bg-indigo-1000 p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-te-toggle="modal" data-te-target="#configedit">
+            <i class="bi bi-pencil-fill"></i> Configuration
+          </button>
+        </span>
+
+        <span data-te-modal-dismiss>
+          <button class="bg-indigo-1000 w-full p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-te-toggle="modal" data-te-target="#logs">
+            <i class="bi bi-card-text"></i> Logs
+          </button>
+        </span>
+
+        <span data-te-modal-dismiss>
+          <button class="rounded-b-lg w-full bg-indigo-1000 p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-te-toggle="modal" data-te-target="#power">
+          <i class="bi bi-power"></i> Power
+        </button>
+        </span>
+      </div>
+    </template>
+
+    <template id="modal-configedit-body">
+      <div class="flex flex-col h-full">
+        <div class="flex flex-row mt-2 mb-2 justify-end items-center">
+          <label for="conf-edit-sel" class="mr-2">Select file:</label>
+          <select id="conf-edit-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
+        </div>
+
+        <pre id="config-editor" class="m-0 w-full h-full"></pre>
+      </div>
+    </template>
+
+    <template id="modal-configedit-footer">
+      <div class="flex items-center rounded-b-md p-2">
+        <button data-te-modal-dismiss id="cfgedit-save" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-950">
+          <i class="bi bi-floppy-fill"></i> Save
+        </button>
+      </div>
+    </template>
+
+    <template id="modal-logs-body">
+      <div class="flex flex-col">
+        <div class="flex flex-row border-b-2 border-indigo-1000">
+          <button id="showuilogs" type="button" class="w-1/2 text-center p-3 bg-indigo-1000 hover:bg-indigo-1000"><i class="bi bi-border-outer"></i> UI</button>
+          <button id="showsrvlogs" type="button" class="w-1/2 text-center p-3 bg-indigo-900 hover:bg-indigo-1000"><i class="bi bi-hdd-network"></i> Server</button>
+        </div>
+
+        <textarea id="uilogs-area" class="w-full text-white bg-indigo-900 focus:outline-none focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000" rows="20" readonly spellcheck="false"></textarea>
+        <textarea id="srvlogs-area" class="hidden text-white w-full bg-indigo-900 focus:outline-none focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000" rows="20" readonly spellcheck="false"></textarea>
+      </div>
+    </template>
+
+    <template id="modal-logs-footer">
+      <div class="flex items-center rounded-b-md p-2">
+        <button id="uilogs-clear" type="button" class="mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
+          <i class="bi bi-x-circle"></i> Clear
+        </button>
+        <button id="srvlogs-reload" type="button" class="hidden mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
+          <i class="bi bi-arrow-clockwise"></i> Reload
+        </button>
+      </div>
+    </template>
+
+    <template id="modal-regchart-body">
+      <div class="flex flex-row">
+        <button id="rchart-chart" type="button" class="w-1/2 text-center p-3 bg-indigo-1000 hover:bg-indigo-1000"><i class="bi bi-bar-chart-fill"></i> Chart</button>
+        <button id="rchart-tx" type="button" class="w-1/2 text-center p-3 bg-indigo-900 hover:bg-indigo-1000"><i class="bi bi-body-text"></i> Text</button>
+      </div>
+
+      <div id="chart"></div>
+      <textarea id="chart-tx" class="w-full h-full text-white bg-indigo-900 focus:outline-none focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000 hidden" readonly spellcheck="false"></textarea>
+    </template>
+
+    <template id="modal-regchart-footer">
+      <div class="flex flex-col gap-y-2 items-center rounded-b-md p-2 bg-indigo-900 lg:flex-row lg:gap-y-0 lg:gap-x-2">
+        <button id="upd-rchart" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
+          <i class="bi bi-arrow-clockwise"></i> Reload
+        </button>
+        <button id="rchart-sett" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline" data-te-toggle="modal" data-te-target="#regchart-sett">
+          <i class="bi bi-gear-fill"></i> Settings
+        </button>
+      </div>
+    </template>
+
+    <template id="modal-regchart-sett-body">
+      <div class="flex flex-col p-1 gap-y-2">
+        <div id="chart-dtpick-start" class="flex flex-col mb-3.5 text-white">
+          <label for="chart-starttm" class="mb-2"><i class="bi bi-calendar"></i> Start time interval</label>
+          <input id="chart-starttm" type="text" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md" data-te-date-timepicker-toggle-ref />
+        </div>
+
+        <div id="chart-dtpick-end" class="flex flex-col mb-3.5 text-white">
+          <label for="chart-endtm" class="mb-2"><i class="bi bi-calendar"></i> End time interval</label>
+          <input id="chart-endtm" type="text" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md" data-te-date-timepicker-toggle-ref />
+        </div>
+      </div>
+    </template>
+
+    <template id="modal-regchart-sett-footer">
+      <div class="flex flex-col gap-y-2 items-center rounded-b-md p-2 bg-indigo-900 lg:flex-row lg:gap-y-0 lg:gap-x-2">
+        <button id="rst-chartintv" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
+          <i class="bi bi-eraser-fill"></i> Clear time interval
+        </button>
+      </div>
+    </template>
+
+    <template id="modal-power-body">
+      <div class="flex flex-col p-4" role="group">
+        <span data-te-modal-dismiss>
+          <button id="relapp" class="rounded-t-lg w-full bg-indigo-1000 p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200">
+            <i class="bi bi-arrow-clockwise"></i> Reload App
+          </button>
+        </span>
+
+        <span data-te-modal-dismiss>
+          <button id="restsrv" class="bg-indigo-1000 w-full p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200">
+            <i class="bi bi-arrow-counterclockwise"></i> Restart server
+          </button>
+        </span>
+
+        <span data-te-modal-dismiss>
+          <button id="shutsrv" class="rounded-b-lg bg-indigo-1000 w-full p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200">
+            <i class="bi bi-power"></i> Power off server
+          </button>
+        </span>
+      </div>
+    </template>
+
+    <template id="modal-regsort-body">
+      <div class="flex flex-col p-4">
+        <label id="panel-type" class="mb-2"></label>
+        <select id="regsort-reg-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
+        <select id="regsort-pin-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
+      </div>
+    </template>
+
+    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="node_modules/ace-builds/src-min-noconflict/theme-tomorrow_night_blue.js"></script>
+    <script type="module" src="node_modules/ace-builds/src-noconflict/mode-yaml.js"></script>
+    <script type="module" src="node_modules/ace-builds/src-noconflict/ext-searchbox.js"></script>
+  </body>
+</html>

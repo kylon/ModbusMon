@@ -1,0 +1,52 @@
+/*
+    modbusmon
+    Copyright (C) 2024  kylon
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+@import "bootstrap-icons";
+@import "ace-builds/css/ace.css";
+@import "ace-builds/css/theme/tomorrow_night_blue.css";
+@import "apexcharts/dist/apexcharts.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.apexcharts-tooltip {
+    background: rgb(17 24 39)!important;
+    border: 1px solid rgb(49 46 129)!important;
+    color: whitesmoke!important;
+}
+.apexcharts-tooltip-title {
+    background: rgb(17 24 39)!important;
+    border-bottom: 1px solid rgb(49 46 129)!important;
+}
+.apexcharts-xaxistooltip {
+    background: rgb(17 24 39)!important;
+    color: whitesmoke!important;
+    border: 1px solid rgb(49 46 129)!important;
+}
+.apexcharts-xaxistooltip-top:after {
+    border-top-color: rgb(17 24 39)!important;
+}
+.apexcharts-xaxistooltip-top:before {
+    border-top-color: rgb(17 24 39)!important;
+}
+.apexcharts-xaxistooltip-bottom:after {
+    border-bottom-color: rgb(17 24 39)!important;
+}
+.apexcharts-xaxistooltip-bottom:before {
+    border-bottom-color: rgb(17 24 39)!important;
+}
