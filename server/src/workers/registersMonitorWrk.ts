@@ -234,9 +234,9 @@ function readRegisters(): void {
         elapsedTimerMap.set(interval, Math.floor(Date.now() / 1000));
 
         readPromList.push(
-            getRegistersData(pullRequestMap.get(interval)!).then((data: Buffer): void => {
+            getRegistersData(pullRequestMap.get(interval)!).then((data: Buffer): RegistersDataMap => {
                 logger.send(`readRegisters: start parsing class ${interval}`);
-                parseRegistersRequestDataBuffer(data, pullRequestMap.get(interval)!);
+                return parseRegistersRequestDataBuffer(data, pullRequestMap.get(interval)!);
             })
         );
     }
