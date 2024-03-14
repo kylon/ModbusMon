@@ -73,6 +73,7 @@ function stopServer(): Promise<void> {
     return invApp.stopApp();
 }
 
+server.disable('x-powered-by');
 server.use((_req, res: any, next): void => {
     if (hasSec)
         res.locals.nnc = crypto.randomBytes(32).toString('base64url');
