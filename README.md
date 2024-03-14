@@ -20,7 +20,7 @@ _Old versions of webos tv 5 and lower are not supported, tizen tvs are not suppo
 - run build.sh
 - cd into `dist/server`
 - type `yarn install --prod`
-- 
+
 **how to run:**
 - open a terminal in `dist/server` folder
 - type `yarn start`
@@ -79,7 +79,7 @@ fastStartup: true             // server start mode [optional, default true]
 registers:
     [registers items]
 combined:
-    [combined items]    
+    [combined items]
 ```
 
 ### registers item example
@@ -143,7 +143,7 @@ name of the function defined in ZcsFn.ts or CustomFn.ts
   pin: true               // show this combined in "Pinned" section [optional]
   hide: false             // do not show in UI [optional, default false]
   ui: pv                  // inverter UI slot [optional]
-  input:                  
+  input:
     fn: inverterStatusStr // custom parsing function
     links:                // list of registers to link to this combined, they must be defined in registers
         - "0x404"         // linked register address
