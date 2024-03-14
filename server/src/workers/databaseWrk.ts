@@ -35,13 +35,13 @@ let logger: Logger;
 function connectDB(): void {
     try {
         const histoTb: string = 'CREATE TABLE IF NOT EXISTS histo (addr TEXT NOT NULL, rvalue TEXT NOT NULL, dtime NUMERIC NOT NULL, PRIMARY KEY(addr,rvalue,dtime))';
-        const lastTwoHrsView: string = "CREATE VIEW IF NOT EXISTS lastTwoHrs AS SELECT * FROM histo WHERE dtime > datetime('now', '-1 hour', 'localtime');";
+        const lastHrView: string = "CREATE VIEW IF NOT EXISTS lastHr AS SELECT * FROM histo WHERE dtime > datetime('now', '-1 hour', 'localtime');";
 
         db = new SQLite3DB(dbPath);
 
         db.pragma('journal_mode = WAL');
         db.exec(histoTb);
-        db.exec(lastTwoHrsView);
+        db.exec(lastHrView);
 
     } catch (e: any) {
         logger.send(`connectDB: ${e?.message}`);
@@ -121,7 +121,7 @@ function doCmds(): void {
                     const hasCustomInterval: boolean = cmdContent.startT !== '' && cmdContent.endT !== '';
                     const stmt = db?.prepare(hasCustomInterval ?
                         "SELECT rvalue, dtime FROM histo WHERE addr=:v1 AND dtime >= datetime(:v2) AND dtime <= datetime(:v3) ORDER BY dtime ASC;" :
-                        "SELECT rvalue, dtime FROM lastTwoHrs WHERE addr=:v1 ORDER BY dtime ASC;"
+                        "SELECT rvalue, dtime FROM lastHr WHERE addr=:v1 ORDER BY dtime ASC;"
                     );
                     const qres: any = stmt?.all( hasCustomInterval ?
                         {v1: cmdContent.regAdr, v2: getCustomDateTime(cmdContent.startT), v3: getCustomDateTime(cmdContent.endT)} :
