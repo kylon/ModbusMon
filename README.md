@@ -18,8 +18,6 @@ _Old versions of webos tv 5 and lower are not supported, tizen tvs are not suppo
 
 **how to build:**
 - run build.sh
-- cd into `dist/server`
-- type `yarn install --prod`
 
 **how to run:**
 - open a terminal in `dist/server` folder
