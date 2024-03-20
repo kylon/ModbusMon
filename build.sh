@@ -22,6 +22,7 @@ function build_client() {
 function build_server() {
   rm -R dist/server &>/dev/null
   yarn --cwd server/ build
+  yarn --cwd dist/server install --prod
 }
 
 if [[ "$1" == "client" ]]; then

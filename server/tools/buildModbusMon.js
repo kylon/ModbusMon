@@ -60,9 +60,6 @@ try {
     if (fs.existsSync(buildPath))
         fs.copyFileSync(path.join(__dirname, '../package.json'), path.join(buildPath, 'package.json'));
 
-    process.chdir(path.join(__dirname, '../../dist/server'));
-    console.log(childProc.execSync('yarn install --prod', {stdio: 'inherit'})?.toString() ?? '');
-
 } catch (e) {
     console.log(e?.message);
 }
