@@ -188,7 +188,10 @@
     </template>
 
     <template id="modal-configedit-footer">
-      <div class="flex items-center rounded-b-md p-2">
+      <div class="flex flex-col gap-y-1 items-center rounded-b-md p-2 lg:flex-row lg:gap-x-1 lg:gap-y-0">
+        <button id="cfgedit-rld" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-950">
+          <i class="bi bi-arrow-clockwise"></i> Reload from disk
+        </button>
         <button data-te-modal-dismiss id="cfgedit-save" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-950">
           <i class="bi bi-floppy-fill"></i> Save
         </button>

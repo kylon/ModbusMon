@@ -36,6 +36,7 @@ export class ConfigEditorModal extends Modal {
     private configSelect: HTMLSelectElement;
     private logsMdl: LogsModal;
     private loading: HTMLDivElement;
+    private reloadBtn: HTMLButtonElement;
     private saveBtn: HTMLButtonElement;
     private editor: any;
 
@@ -55,11 +56,13 @@ export class ConfigEditorModal extends Modal {
         this.logsMdl = logsModal;
         this.toastNotification = toastNotif;
         this.loading = this.modalHandle.querySelector<HTMLDivElement>('.loadscr')!;
+        this.reloadBtn = this.modalHandle.querySelector<HTMLButtonElement>('#cfgedit-rld')!;
         this.saveBtn = this.modalHandle.querySelector<HTMLButtonElement>('#cfgedit-save')!;
         this.configSelect = this.modalHandle.querySelector<HTMLSelectElement>('#conf-edit-sel')!;
         this.editor = null;
 
         this.modalHandle.addEventListener('show.te.modal', this.show.bind(this));
+        this.reloadBtn.addEventListener('click', this.reloadConfig.bind(this));
         this.saveBtn.addEventListener('click', this.saveConfig.bind(this));
         this.configSelect.addEventListener('change', this.fetchConfig.bind(this));
     }
@@ -73,6 +76,12 @@ export class ConfigEditorModal extends Modal {
         this.toggleUIState(false);
         toggleLoadingScreen(this.loading, true);
         this.initEditor();
+        this.fetchConfig();
+    }
+
+    private reloadConfig(): void {
+        this.toggleUIState(false);
+        toggleLoadingScreen(this.loading, true);
         this.fetchConfig();
     }
 
