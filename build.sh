@@ -14,9 +14,23 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-rm -R dist/client &>/dev/null
-rm -R dist/server &>/dev/null
-cd client || exit 1
-yarn build
-cd ../server || exit 1
-yarn build
+function build_client() {
+  rm -R dist/client &>/dev/null
+  yarn --cwd client/ build
+}
+
+function build_server() {
+  rm -R dist/server &>/dev/null
+  yarn --cwd server/ build
+}
+
+if [[ "$1" == "client" ]]; then
+  build_client
+
+elif [[ "$1" == "server" ]]; then
+  build_server
+
+else
+  build_client
+  build_server
+fi
