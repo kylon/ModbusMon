@@ -178,9 +178,10 @@
 
     <template id="modal-configedit-body">
       <div class="flex flex-col h-full">
-        <div class="flex flex-row mt-2 mb-2 justify-end items-center">
+        <div class="flex flex-row mt-2 mb-2 justify-end items-center me-1">
           <label for="conf-edit-sel" class="mr-2">Select file:</label>
           <select id="conf-edit-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
+          <span id="conf-dirtyb" class="hidden whitespace-nowrap rounded-[0.27rem] bg-yellow-500 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-orange-950">dirty</span>
         </div>
 
         <pre id="config-editor" class="m-0 w-full h-full"></pre>

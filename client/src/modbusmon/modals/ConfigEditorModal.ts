@@ -36,8 +36,11 @@ export class ConfigEditorModal extends Modal {
     private configSelect: HTMLSelectElement;
     private logsMdl: LogsModal;
     private loading: HTMLDivElement;
+    private dirtyBadge: DOMTokenList;
     private reloadBtn: HTMLButtonElement;
     private saveBtn: HTMLButtonElement;
+    private isDirty: boolean;
+    private oldSelectVal: string;
     private editor: any;
 
     constructor(abortControllerMap: AbortCtrllrMap, logsModal: LogsModal, toastNotif: ToastNotification) {
@@ -56,15 +59,18 @@ export class ConfigEditorModal extends Modal {
         this.logsMdl = logsModal;
         this.toastNotification = toastNotif;
         this.loading = this.modalHandle.querySelector<HTMLDivElement>('.loadscr')!;
+        this.dirtyBadge = this.modalHandle.querySelector<HTMLSpanElement>('#conf-dirtyb')!.classList;
         this.reloadBtn = this.modalHandle.querySelector<HTMLButtonElement>('#cfgedit-rld')!;
         this.saveBtn = this.modalHandle.querySelector<HTMLButtonElement>('#cfgedit-save')!;
         this.configSelect = this.modalHandle.querySelector<HTMLSelectElement>('#conf-edit-sel')!;
+        this.oldSelectVal = '';
+        this.isDirty = false;
         this.editor = null;
 
         this.modalHandle.addEventListener('show.te.modal', this.show.bind(this));
         this.reloadBtn.addEventListener('click', this.reloadConfig.bind(this));
         this.saveBtn.addEventListener('click', this.saveConfig.bind(this));
-        this.configSelect.addEventListener('change', this.fetchConfig.bind(this));
+        this.configSelect.addEventListener('change', this.selectConfig.bind(this));
     }
 
     private toggleUIState(enable: boolean): void {
@@ -72,7 +78,32 @@ export class ConfigEditorModal extends Modal {
         this.saveBtn.disabled = !enable;
     }
 
+    private setDirty(): void {
+        this.isDirty = true;
+        this.dirtyBadge.remove('hidden');
+    }
+
+    private unsetDirty(): void {
+        this.isDirty = false;
+        this.dirtyBadge.add('hidden');
+    }
+
+    private confirmUnsavedChanges(): boolean {
+        if (!this.isDirty)
+            return true;
+
+        const res: boolean = confirm('You have unsaved changes!\nIf you proceed, you will lose your changes!');
+
+        if (res)
+            this.unsetDirty();
+
+        return res;
+    }
+
     private show(): void {
+        if (this.isDirty)
+            return;
+
         this.toggleUIState(false);
         toggleLoadingScreen(this.loading, true);
         this.initEditor();
@@ -80,9 +111,24 @@ export class ConfigEditorModal extends Modal {
     }
 
     private reloadConfig(): void {
+        if (!this.confirmUnsavedChanges())
+            return;
+
         this.toggleUIState(false);
         toggleLoadingScreen(this.loading, true);
         this.fetchConfig();
+    }
+
+    private selectConfig(): void {
+        if (!this.confirmUnsavedChanges()) {
+            this.configSelect.value = this.oldSelectVal;
+            return;
+        }
+
+        this.toggleUIState(false);
+        toggleLoadingScreen(this.loading, true);
+        this.fetchConfig();
+        this.oldSelectVal = this.configSelect.value;
     }
 
     private saveConfig(): void {
@@ -102,6 +148,7 @@ export class ConfigEditorModal extends Modal {
                 throw new Error(data.emsg);
 
             } else {
+                this.unsetDirty();
                 this.toastNotification.show(this.toastTitle, 'Success, reloading...');
                 dispatchAppReloadRequest();
             }
@@ -159,6 +206,11 @@ export class ConfigEditorModal extends Modal {
             useSvgGutterIcons: true,
             dragEnabled: false
         });
+
+        this.editor.getSession().on('change', (): void => {
+            if (!this.saveBtn.disabled) // dont set dirty when setvalue(), wa for acejs
+                this.setDirty();
+        });
     }
 
     public setConfigList(configList: string[]): void {
@@ -173,5 +225,7 @@ export class ConfigEditorModal extends Modal {
             opt.value = cfg;
             this.configSelect.add(opt);
         }
+
+        this.oldSelectVal = this.configSelect.value;
     }
 }
