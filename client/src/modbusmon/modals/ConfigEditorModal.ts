@@ -111,8 +111,10 @@ export class ConfigEditorModal extends Modal {
     }
 
     private reloadConfig(): void {
-        if (!this.confirmUnsavedChanges())
+        if (!this.confirmUnsavedChanges()) {
+            this.editor.focus();
             return;
+        }
 
         this.toggleUIState(false);
         toggleLoadingScreen(this.loading, true);
@@ -122,6 +124,7 @@ export class ConfigEditorModal extends Modal {
     private selectConfig(): void {
         if (!this.confirmUnsavedChanges()) {
             this.configSelect.value = this.oldSelectVal;
+            this.editor.focus();
             return;
         }
 
