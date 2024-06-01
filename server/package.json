@@ -9,16 +9,16 @@
   },
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.9",
+    "@types/better-sqlite3": "^7.6.10",
     "@types/express": "^4.17.21",
-    "@types/node": "^20.11.24",
-    "typescript": "^5.3.3"
+    "@types/node": "^20.13.0",
+    "typescript": "^5.4.5"
   },
   "dependencies": {
-    "better-sqlite3": "^9.4.3",
-    "ejs": "^3.1.9",
-    "express": "^4.18.2",
+    "better-sqlite3": "^11.0.0",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
     "helmet": "^7.1.0",
-    "yaml": "^2.4.0"
+    "yaml": "^2.4.2"
   }
 }
