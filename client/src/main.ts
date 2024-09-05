@@ -64,7 +64,7 @@ function serverPullData(): void {
 
     getFetchCmd('pullserv', abortControllerMap).then(res => res.json()).then((data: App.ServerData): void => {
         hConnectionLbl.update(data.isValidConnection);
-        hIPLbl.update(`${data.addr}:${data.port}`);
+        hIPLbl.update(data.addr, data.port);
         hConfigLbl.update(data.confStamp);
         updateRegisterPanelValues(data.regsData, pinnedPanel, othersPanel, logsMdl);
         inverterUI.update();
@@ -91,7 +91,7 @@ function startApp(): void {
         serverPullTimeout = udata.pullTimer * 1000;
 
         confEditMdl.setConfigList(udata.confList);
-        hIPLbl.update(`${udata.host}:${udata.port}`);
+        hIPLbl.update(udata.host, udata.port);
         hConnectionLbl.update(udata.isValidConn);
         hConfigLbl.update(udata.confStamp);
         fillRegisterPanels(udata.registerList, pinnedPanel, othersPanel);

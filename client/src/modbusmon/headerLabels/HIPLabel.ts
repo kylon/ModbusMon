@@ -27,11 +27,11 @@ export class HIPLabel extends HLabel {
         this.oldIP = '';
     }
 
-    public update(addr: string): void {
+    public update(addr: string, port: number): void {
         if (addr === this.oldIP)
             return;
 
-        this._update(!!addr, this.defaultIP, addr);
+        this._update(!!addr && !!port, this.defaultIP, `${addr}:${port}`);
 
         this.oldIP = addr;
     }
