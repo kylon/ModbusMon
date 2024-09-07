@@ -15,32 +15,21 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import {Toast} from "tw-elements";
-
 export class ToastNotification {
+    private toastElm: HTMLDivElement;
     private titleElm: HTMLParagraphElement;
     private contentElm: HTMLDivElement;
     private isShown: boolean;
-    private instance: any;
+    private hideTimer: NodeJS.Timeout|null;
 
     constructor() {
-        const toast: HTMLDivElement = document.querySelector<HTMLDivElement>('#toast-notf')!;
-
-        this.instance = Toast.getOrCreateInstance(toast);
-        this.titleElm = toast.querySelector<HTMLParagraphElement>('#toast-title')!;
-        this.contentElm = toast.querySelector<HTMLDivElement>('#toast-cont')!;
+        this.toastElm = document.querySelector<HTMLDivElement>('#toast-notf')!;
+        this.titleElm = this.toastElm.querySelector<HTMLParagraphElement>('#toast-title')!;
+        this.contentElm = this.toastElm.querySelector<HTMLDivElement>('#toast-cont')!;
         this.isShown = false;
+        this.hideTimer = null;
 
-        toast.addEventListener('shown.te.toast', this.shown.bind(this));
-        toast.addEventListener('hidden.te.toast', this.hidden.bind(this));
-    }
-
-    private shown(): void {
-        this.isShown = true;
-    }
-
-    private hidden(): void {
-        this.isShown = false;
+        this.toastElm.querySelector<HTMLButtonElement>('[data-mbmon-toast-dismiss]')!.addEventListener('click', this.hide.bind(this));
     }
 
     public show(title: string, msg: string): void {
@@ -49,7 +38,18 @@ export class ToastNotification {
 
         this.titleElm.textContent = title;
         this.contentElm.textContent = msg;
+        this.toastElm.classList.remove('hidden');
+        this.isShown = true;
 
-        this.instance.show();
+        this.hideTimer = setTimeout(() => this.hide(), 4500);
+    }
+
+    public hide(): void {
+        if (!this.isShown)
+            return;
+
+        clearTimeout(this.hideTimer!);
+        this.toastElm.classList.add('hidden');
+        this.isShown = false;
     }
 }

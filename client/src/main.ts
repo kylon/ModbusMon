@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import './style.css'
-import {initTE, Toast, Datetimepicker} from "tw-elements";
+import {initTE, Datetimepicker} from "tw-elements";
 import {
     abortAllRequests,
     fillRegisterPanels,
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', (): void => {
     new MenuModal();
     new PowerModal();
     modalsJsLogic.init();
-    initTE({Toast, Datetimepicker});
+    initTE({Datetimepicker});
 
     startApp();
 });
