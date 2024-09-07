@@ -34,12 +34,14 @@
       <div class="flex flex-col-reverse gap-y-4 p-2 mb-5 xl:justify-between xl:flex-row xl:gap-y-0">
         <div id="header-info" class="flex flex-row flex-wrap gap-3 font-bold"></div>
 
-        <div id="menu-btn" role="button" class="flex flex-row justify-end items-center underline underline-offset-4 decoration-white/30 text-white hover:decoration-white" data-te-toggle="modal" data-te-target="#menu">
+        <div id="menu-btn" role="button" class="flex flex-row justify-end items-center underline underline-offset-4 decoration-white/30 text-white hover:decoration-white" data-mbmon-modal-targ="#menu">
           <i class="bi bi-list"></i> <span>Menù</span>
         </div>
       </div>
 
       <div id="main-cont" class="flex flex-col p-1 gap-4 max-h-full overflow-hidden xl:flex-row"></div>
+
+      <div id="modal-page-bg" class="hidden opacity-50 transition-all duration-300 ease-in-out fixed top-0 left-0 z-[1040] bg-black w-screen h-screen"></div>
 
       <div id="toast-notf" class="hidden absolute z-[1001] right-3 bottom-3 pointer-events-auto mx-auto w-auto max-w-[30%] rounded-lg bg-indigo-600 bg-clip-padding text-sm shadow-lg shadow-black/5 data-[te-toast-show]:block data-[te-toast-hide]:hidden" role="alert" data-te-toast-init>
         <div class="flex items-center justify-between rounded-t-lg bg-clip-padding px-4 pb-2 pt-2.5">
@@ -127,20 +129,20 @@
     </template>
 
     <template id="modal">
-      <div data-te-modal-init class="fixed left-0 top-0 hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none" tabindex="-1" aria-hidden="true">
-        <div data-te-modal-dialog-ref class="shadow-full-box pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out">
+      <div class="fixed left-0 top-0 hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none" tabindex="-1" aria-hidden="true">
+        <div data-mbmon-modal-dialog-ref class="shadow-full-box pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out">
           <div class="mcont pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-indigo-800 bg-clip-padding text-current outline-none">
             <div class="flex flex-shrink-0 items-center justify-between rounded-t-md p-4 bg-indigo-600 text-white">
               <h5 class="mtitle flex items-center text-xl font-medium leading-normal gap-1"><span class="mtitle-tx"></span></h5>
 
-              <button type="button" class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none" data-te-modal-dismiss aria-label="Close">
+              <button type="button" class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none" data-mbmon-modal-dismiss aria-label="Close">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
-            <div class="mbody relative flex flex-col grow text-white" data-te-modal-body-ref></div>
+            <div class="mbody relative flex flex-col grow text-white"></div>
           </div>
         </div>
       </div>
@@ -156,20 +158,20 @@
 
     <template id="modal-menu-body">
       <div class="flex flex-col p-4" role="group">
-        <span data-te-modal-dismiss>
-          <button class="rounded-t-lg w-full bg-indigo-1000 p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-te-toggle="modal" data-te-target="#configedit">
+        <span data-mbmon-modal-dismiss>
+          <button class="rounded-t-lg w-full bg-indigo-1000 p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-mbmon-modal-targ="#configedit">
             <i class="bi bi-pencil-fill"></i> Configuration
           </button>
         </span>
 
-        <span data-te-modal-dismiss>
-          <button class="bg-indigo-1000 w-full p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-te-toggle="modal" data-te-target="#logs">
+        <span data-mbmon-modal-dismiss>
+          <button class="bg-indigo-1000 w-full p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-mbmon-modal-targ="#logs">
             <i class="bi bi-card-text"></i> Logs
           </button>
         </span>
 
-        <span data-te-modal-dismiss>
-          <button class="rounded-b-lg w-full bg-indigo-1000 p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-te-toggle="modal" data-te-target="#power">
+        <span data-mbmon-modal-dismiss>
+          <button class="rounded-b-lg w-full bg-indigo-1000 p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200" data-mbmon-modal-targ="#power">
           <i class="bi bi-power"></i> Power
         </button>
         </span>
@@ -193,7 +195,7 @@
         <button id="cfgedit-rld" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-950">
           <i class="bi bi-arrow-clockwise"></i> Reload from disk
         </button>
-        <button data-te-modal-dismiss id="cfgedit-save" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-950">
+        <button data-mbmon-modal-dismiss id="cfgedit-save" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-950">
           <i class="bi bi-floppy-fill"></i> Save
         </button>
       </div>
@@ -237,7 +239,7 @@
         <button id="upd-rchart" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
           <i class="bi bi-arrow-clockwise"></i> Reload
         </button>
-        <button id="rchart-sett" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline" data-te-toggle="modal" data-te-target="#regchart-sett">
+        <button id="rchart-sett" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline" data-mbmon-modal-targ="#regchart-sett">
           <i class="bi bi-gear-fill"></i> Settings
         </button>
       </div>
@@ -267,19 +269,19 @@
 
     <template id="modal-power-body">
       <div class="flex flex-col p-4" role="group">
-        <span data-te-modal-dismiss>
+        <span data-mbmon-modal-dismiss>
           <button id="relapp" class="rounded-t-lg w-full bg-indigo-1000 p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200">
             <i class="bi bi-arrow-clockwise"></i> Reload App
           </button>
         </span>
 
-        <span data-te-modal-dismiss>
+        <span data-mbmon-modal-dismiss>
           <button id="restsrv" class="bg-indigo-1000 w-full p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200">
             <i class="bi bi-arrow-counterclockwise"></i> Restart server
           </button>
         </span>
 
-        <span data-te-modal-dismiss>
+        <span data-mbmon-modal-dismiss>
           <button id="shutsrv" class="rounded-b-lg bg-indigo-1000 w-full p-4 hover:bg-indigo-960 hover:transition hover:ease-in-out hover:duration-200">
             <i class="bi bi-power"></i> Power off server
           </button>

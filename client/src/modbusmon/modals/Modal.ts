@@ -30,7 +30,7 @@ export abstract class Modal {
     }
 
     private setModalSize(size: ModalSize, modal: HTMLDivElement, mcont: HTMLDivElement): void {
-        const dialogRef: DOMTokenList = modal.querySelector<HTMLDivElement>('[data-te-modal-dialog-ref]')!.classList;
+        const dialogRef: DOMTokenList = modal.querySelector<HTMLDivElement>('[data-mbmon-modal-dialog-ref]')!.classList;
 
         switch (size) {
             case ModalSize.Default:

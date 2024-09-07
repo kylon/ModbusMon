@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import './style.css'
-import {initTE, Modal, Toast, Animate, Datetimepicker} from "tw-elements";
+import {initTE, Toast, Datetimepicker} from "tw-elements";
 import {
     abortAllRequests,
     fillRegisterPanels,
@@ -40,6 +40,7 @@ import {RegisterChartSettingsModal} from "./modbusmon/modals/RegisterChartSettin
 import {PowerModal} from "./modbusmon/modals/PowerModal.ts";
 import {RegisterSortModal} from "./modbusmon/modals/RegisterSortModal.ts";
 import {InverterUI} from "./modbusmon/InverterUI.ts";
+import {ModalsLogic} from "./modbusmon/modals/ModalsLogic.ts";
 
 const abortControllerMap: AbortCtrllrMap = new Map();
 let toastNotification: ToastNotification;
@@ -117,6 +118,8 @@ function setupHLabels(): void {
 }
 
 document.addEventListener('DOMContentLoaded', (): void => {
+    const modalsJsLogic: ModalsLogic = new ModalsLogic();
+
     appLoadingDiv = document.querySelector<HTMLDivElement>('#loading-scr')!;
     toastNotification = new ToastNotification();
     logsMdl = new LogsModal(abortControllerMap);
@@ -131,7 +134,8 @@ document.addEventListener('DOMContentLoaded', (): void => {
     setupHLabels();
     new MenuModal();
     new PowerModal();
-    initTE({Modal, Toast, Animate, Datetimepicker});
+    modalsJsLogic.init();
+    initTE({Toast, Datetimepicker});
 
     startApp();
 });
