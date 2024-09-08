@@ -1,12 +1,10 @@
 export class ModalsLogic {
+    private static readonly modalPageBg: DOMTokenList = document.querySelector<HTMLDivElement>('#modal-page-bg')!.classList;
+    private static openCount: number = 0;
     private modalRefCache: Map<string, HTMLDivElement>;
-    private readonly modalPageBg: DOMTokenList;
-    private openCount: number;
 
     constructor() {
-        this.modalPageBg = document.querySelector<HTMLDivElement>('#modal-page-bg')!.classList;
         this.modalRefCache = new Map();
-        this.openCount = 0;
     }
 
     public init(): void {
@@ -15,23 +13,30 @@ export class ModalsLogic {
 
         for (const btn of showBtnList) {
             const modalId: string = (btn as HTMLDivElement).dataset.mbmonModalTarg as string;
-            const modalElm: HTMLDivElement = document.querySelector<HTMLDivElement>(modalId)!;
 
-            modalElm.addEventListener('click', this.dismissOutside.bind(this));
-            modalElm.querySelectorAll<HTMLElement>('[data-mbmon-modal-dismiss]').forEach((dismissBtn: HTMLElement): void => {
-                dismissBtn.setAttribute('data-mbmon-modal-dismiss', modalId);
-            });
+            if (!this.modalRefCache.has(modalId))
+                this.modalRefCache.set(modalId, document.querySelector<HTMLDivElement>(modalId)!);
 
-            this.modalRefCache.set(modalId, modalElm);
             btn.addEventListener('click', this.showModal.bind(this));
         }
 
-        for (const closeBtn of closeBtnList)
+        for (const closeBtn of closeBtnList) {
+            const modalId: string = (closeBtn as HTMLElement).dataset.mbmonModalDismiss as string;
+
+            if (!this.modalRefCache.has(modalId))
+                this.modalRefCache.set(modalId, document.querySelector<HTMLDivElement>(modalId)!);
+
             closeBtn.addEventListener('click', this.dismissModal.bind(this));
+        }
+
+        this.modalRefCache.forEach((modalElm: HTMLDivElement): void => {
+            modalElm.addEventListener('click', this.dismissOutside.bind(this));
+        });
+
+        document.addEventListener('keyup', this.dismissEscKey.bind(this));
     }
 
-    private showModal(e: Event): void {
-        const modal: HTMLDivElement = this.modalRefCache.get((e.currentTarget as HTMLDivElement).dataset.mbmonModalTarg as string)!;
+    public static show(modal: HTMLDivElement): void {
         const modalBase: HTMLDivElement = modal.querySelector<HTMLDivElement>(':first-child')!;
 
         modal.classList.remove('hidden');
@@ -41,13 +46,14 @@ export class ModalsLogic {
         modalBase.focus(); // anim trick, better way?
         modalBase.classList.remove('opacity-0');
         modalBase.classList.add('opacity-100', 'transform-none');
-        this.modalPageBg.remove('hidden');
+        ModalsLogic.modalPageBg.remove('hidden');
         document.body.classList.add('overflow-hidden', 'pr-0');
-        ++this.openCount;
+        ++ModalsLogic.openCount;
+
+        modal.dataset.mbmonModalOpen = "true";
     }
 
-    private dismissModal(e: Event): void {
-        const modal: HTMLDivElement = this.modalRefCache.get((e.currentTarget as HTMLElement).dataset.mbmonModalDismiss as string)!;
+    public static hide(modal: HTMLDivElement): void {
         const modalBase: HTMLDivElement = modal.querySelector<HTMLDivElement>(':first-child')!;
 
         modal.removeAttribute('aria-modal');
@@ -56,16 +62,29 @@ export class ModalsLogic {
         modalBase.focus(); // anim trick, better way?
         modalBase.classList.remove('opacity-100', 'transform-none');
         modalBase.classList.add('opacity-0');
-        --this.openCount;
+        --ModalsLogic.openCount;
+        delete modal.dataset.mbmonModalOpen;
 
         setTimeout((): void => modal.classList.add('hidden'), 300);
 
-        if (this.openCount <= 0) {
-            this.openCount = 0;
+        if (ModalsLogic.openCount <= 0) {
+            ModalsLogic.openCount = 0;
 
-            this.modalPageBg.add('hidden');
+            ModalsLogic.modalPageBg.add('hidden');
             document.body.classList.remove('overflow-hidden', 'pr-0');
         }
+    }
+
+    private showModal(e: Event): void {
+        const modal: HTMLDivElement = this.modalRefCache.get((e.currentTarget as HTMLDivElement).dataset.mbmonModalTarg as string)!;
+
+        ModalsLogic.show(modal);
+    }
+
+    private dismissModal(e: Event): void {
+        const modal: HTMLDivElement = this.modalRefCache.get((e.currentTarget as HTMLElement).dataset.mbmonModalDismiss as string)!;
+
+        ModalsLogic.hide(modal);
     }
 
     private dismissOutside(e: Event): void {
@@ -75,5 +94,14 @@ export class ModalsLogic {
         const dismissBtn: HTMLElement = (e.currentTarget as HTMLDivElement).querySelector<HTMLElement>('[data-mbmon-modal-dismiss]')!;
 
         dismissBtn.dispatchEvent(new Event('click'));
+    }
+
+    private dismissEscKey(e: KeyboardEvent): void {
+        if (e.code !== 'Escape')
+            return;
+
+        document.querySelectorAll<HTMLDivElement>('[data-mbmon-modal-open]').forEach((modal: HTMLDivElement): void => {
+            ModalsLogic.hide(modal);
+        });
     }
 }

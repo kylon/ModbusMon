@@ -51,7 +51,6 @@ export class ConfigEditorModal extends Modal {
             titleIcon: 'pencil-fill',
             body: cloneTemplate<HTMLDivElement>('modal-configedit-body'),
             footer: cloneTemplate<HTMLDivElement>('modal-configedit-footer'),
-            static: true,
             hasLoading: true
         });
 

@@ -34,7 +34,6 @@ interface ModalConfig {
     body: HTMLElement;
     bodyClasses?: string[];
     footer?: HTMLElement;
-    static?: boolean;
     hasLoading: boolean;
     zindex?: number;
 }

@@ -16,9 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import {cloneTemplate, getParentElementAt, postFetchCmd, responseHasError, toggleLoadingScreen} from "../utils.ts";
+import {ModalsLogic} from "./ModalsLogic.ts";
 import {Modal} from "./Modal.ts";
 import {ModalSize} from "../enums/ModalSize.ts";
-import {Modal as TwModal} from "tw-elements";
 import {LogsModal} from "./LogsModal.ts";
 import {ToastNotification} from "../ToastNotification.ts";
 
@@ -33,7 +33,6 @@ export class RegisterSortModal extends Modal {
     private sortRegSelect: HTMLSelectElement;
     private sortPinSelect: HTMLSelectElement;
     private selectLbl: HTMLLabelElement;
-    private twModalInstance: any;
     private selectedRegInPanel: string;
     private isRegistersPanel: boolean;
 
@@ -50,7 +49,6 @@ export class RegisterSortModal extends Modal {
         this.toastNotification = toastNotif;
         this.abortControllerMap = abortControllerMap;
         this.logsMdl = logsModal;
-        this.twModalInstance = TwModal.getOrCreateInstance(this.modalHandle);
         this.loading = this.modalHandle.querySelector<HTMLDivElement>('.loadscr')!;
         this.sortRegSelect = this.modalHandle.querySelector<HTMLSelectElement>('#regsort-reg-sel')!;
         this.sortPinSelect = this.modalHandle.querySelector<HTMLSelectElement>('#regsort-pin-sel')!;
@@ -121,7 +119,7 @@ export class RegisterSortModal extends Modal {
 
         }).finally((): void => {
             toggleLoadingScreen(this.loading, false);
-            this.twModalInstance.hide();
+            ModalsLogic.hide(this.modalHandle);
         });
     }
 
@@ -164,6 +162,6 @@ export class RegisterSortModal extends Modal {
         }
 
         this.selectedRegInPanel = regPos;
-        this.twModalInstance.show();
+        ModalsLogic.show(this.modalHandle);
     }
 }

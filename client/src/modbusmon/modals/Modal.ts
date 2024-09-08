@@ -79,13 +79,12 @@ export abstract class Modal {
         mbody.appendChild(config.body);
         this.setModalSize(config.size, modal, cont);
 
-        if (config.static) {
-            modalDiv.setAttribute('data-te-backdrop', 'static');
-            modalDiv.setAttribute('data-te-keyboard', 'false');
-        }
-
         if (config.footer !== undefined)
             cont.appendChild(config.footer);
+
+        modal.querySelectorAll<HTMLElement>('[data-mbmon-modal-dismiss]').forEach((dismissBtn: HTMLElement): void => {
+            dismissBtn.setAttribute('data-mbmon-modal-dismiss', `#${config.id}`);
+        });
 
         return modal;
     }

@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import {cloneTemplate, getFetchCmd, toggleLoadingScreen} from "../utils.ts";
-import {Modal as TwModal} from "tw-elements";
+import {ModalsLogic} from "./ModalsLogic.ts";
 import {Modal} from "./Modal.ts";
 import {RegisterChartSettingsModal} from "./RegisterChartSettingsModal.ts";
 import {ModalSize} from "../enums/ModalSize.ts";
@@ -35,7 +35,6 @@ export class RegisterChartModal extends Modal {
     private chartViewBtn: HTMLButtonElement;
     private textViewBtn: HTMLButtonElement;
     private currentRegister: string;
-    private twModalInstance: any;
     private chart: any;
 
     constructor(abortControllerMap: AbortCtrllrMap, logsModal: LogsModal, regChartSettModal: RegisterChartSettingsModal) {
@@ -49,7 +48,6 @@ export class RegisterChartModal extends Modal {
             hasLoading: true
         });
 
-        this.twModalInstance = TwModal.getOrCreateInstance(this.modalHandle);
         this.abortControllerMap = abortControllerMap;
         this.logsMdl = logsModal;
         this.regChartSetMdl = regChartSettModal;
@@ -223,6 +221,6 @@ export class RegisterChartModal extends Modal {
         this.currentRegister = register;
 
         this.fetchChart();
-        this.twModalInstance.show();
+        ModalsLogic.show(this.modalHandle);
     }
 }
