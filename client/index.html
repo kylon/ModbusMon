@@ -25,7 +25,7 @@
 
   <body class="relative bg-indigo-1000">
     <div id="loading-scr" class="absolute flex flex-col h-screen w-screen justify-center items-center text-white z-[999] bg-black bg-opacity-50">
-      <div class="inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] text-primary opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]" role="status">
+      <div class="inline-block h-8 w-8 animate-ping rounded-full bg-current align-[-0.125em] text-blue-800 motion-reduce:animate-ping" role="status">
         <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
       </div>
     </div>
@@ -114,15 +114,15 @@
           <span id="invui-load">0.00</span> Kw
         </div>
 
-        <span id="invui-pv-ar" class="hidden absolute left-[5rem] top-[2.3rem] md:left-[7rem] md:top-[3.6rem] lg:left-[8rem] 3xl:text-xl 4xl:text-2xl xl:left-[5rem] xl:top-[2.5rem] 2xl:left-[8rem] 2xl:top-[3.95rem] 3xl:left-[12rem] 3xl:top-[6.15rem] 4xl:left-[19rem] 4xl:top-[9.45rem] animate-[slide-out-right_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-right-fill text-warning"></i></span>
+        <span id="invui-pv-ar" class="hidden absolute left-[5rem] top-[2.3rem] md:left-[7rem] md:top-[3.6rem] lg:left-[8rem] 3xl:text-xl 4xl:text-2xl xl:left-[5rem] xl:top-[2.5rem] 2xl:left-[8rem] 2xl:top-[3.95rem] 3xl:left-[12rem] 3xl:top-[6.15rem] 4xl:left-[19rem] 4xl:top-[9.45rem] animate-slide-right"><i class="bi bi-caret-right-fill text-yellow-500"></i></span>
 
-        <span id="invui-batt-ar" class="hidden absolute left-[5rem] top-[7.6rem] md:left-[7rem] md:top-[11.25rem] lg:left-[8rem] 3xl:text-xl 4xl:text-2xl xl:left-[5rem] xl:top-[8.09rem] 2xl:left-[8rem] 2xl:top-[12.09rem] 3xl:left-[12rem] 3xl:top-[18.3rem] 4xl:left-[19rem] 4xl:top-[27.7rem] animate-[slide-out-right_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-right-fill text-warning"></i></span>
-        <span id="invui-batt-al" class="hidden absolute left-[6.6rem] top-[7.6rem] md:left-[9rem] md:top-[11.25rem] lg:left-[9rem] 3xl:text-xl 4xl:text-2xl xl:left-[7rem] xl:top-[8.09rem] 2xl:left-[10rem] 2xl:top-[12.09rem] 3xl:left-[14rem] 3xl:top-[18.3rem] 4xl:left-[22rem] 4xl:top-[27.7rem] animate-[slide-out-left_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-left-fill text-warning"></i></span>
+        <span id="invui-batt-ar" class="hidden absolute left-[5rem] top-[7.6rem] md:left-[7rem] md:top-[11.25rem] lg:left-[8rem] 3xl:text-xl 4xl:text-2xl xl:left-[5rem] xl:top-[8.09rem] 2xl:left-[8rem] 2xl:top-[12.09rem] 3xl:left-[12rem] 3xl:top-[18.3rem] 4xl:left-[19rem] 4xl:top-[27.7rem] animate-slide-right"><i class="bi bi-caret-right-fill text-yellow-500"></i></span>
+        <span id="invui-batt-al" class="hidden absolute left-[6.6rem] top-[7.6rem] md:left-[9rem] md:top-[11.25rem] lg:left-[9rem] 3xl:text-xl 4xl:text-2xl xl:left-[7rem] xl:top-[8.09rem] 2xl:left-[10rem] 2xl:top-[12.09rem] 3xl:left-[14rem] 3xl:top-[18.3rem] 4xl:left-[22rem] 4xl:top-[27.7rem] animate-slide-left"><i class="bi bi-caret-left-fill text-yellow-500"></i></span>
 
-        <span id="invui-grid-ar" class="hidden absolute right-[6rem] top-[2.2rem] md:right-[9rem] md:top-[3.45rem] lg:right-[9rem] 3xl:text-xl 4xl:text-2xl xl:right-[7rem] xl:top-[2.3rem] 2xl:right-[10rem] 2xl:top-[3.7rem] 3xl:right-[14rem] 3xl:top-[5.8rem] 4xl:right-[20rem] 4xl:top-[8.95rem] animate-[slide-out-right_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-right-fill text-warning"></i></span>
-        <span id="invui-grid-al" class="hidden absolute right-[5rem] top-[2.2rem] md:right-[7rem] md:top-[3.45rem] lg:right-[7rem] 3xl:text-xl 4xl:text-2xl xl:right-[5rem] xl:top-[2.3rem] 2xl:right-[8rem] 2xl:top-[3.7rem] 3xl:right-[12rem] 3xl:top-[5.8rem] 4xl:right-[17rem] 4xl:top-[8.95rem] animate-[slide-out-left_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-left-fill text-warning"></i></span>
+        <span id="invui-grid-ar" class="hidden absolute right-[6rem] top-[2.2rem] md:right-[9rem] md:top-[3.45rem] lg:right-[9rem] 3xl:text-xl 4xl:text-2xl xl:right-[7rem] xl:top-[2.3rem] 2xl:right-[10rem] 2xl:top-[3.7rem] 3xl:right-[14rem] 3xl:top-[5.8rem] 4xl:right-[20rem] 4xl:top-[8.95rem] animate-slide-right"><i class="bi bi-caret-right-fill text-yellow-500"></i></span>
+        <span id="invui-grid-al" class="hidden absolute right-[5rem] top-[2.2rem] md:right-[7rem] md:top-[3.45rem] lg:right-[7rem] 3xl:text-xl 4xl:text-2xl xl:right-[5rem] xl:top-[2.3rem] 2xl:right-[8rem] 2xl:top-[3.7rem] 3xl:right-[12rem] 3xl:top-[5.8rem] 4xl:right-[17rem] 4xl:top-[8.95rem] animate-slide-left"><i class="bi bi-caret-left-fill text-yellow-500"></i></span>
 
-        <span id="invui-load-ar" class="hidden absolute right-[6rem] top-[7.6rem] md:right-[9rem] md:top-[11.25rem] lg:right-[9rem] 3xl:text-xl 4xl:text-2xl xl:right-[7rem] xl:top-[8.09rem] 2xl:right-[10rem] 2xl:top-[12.09rem] 3xl:right-[14rem] 3xl:top-[18.3rem] 4xl:right-[20rem] 4xl:top-[27.7rem] animate-[slide-out-right_1s_ease-in-out]" data-te-animation-init data-te-animation-start="onLoad" data-te-animation-repeat="true"><i class="bi bi-caret-right-fill text-warning"></i></span>
+        <span id="invui-load-ar" class="hidden absolute right-[6rem] top-[7.6rem] md:right-[9rem] md:top-[11.25rem] lg:right-[9rem] 3xl:text-xl 4xl:text-2xl xl:right-[7rem] xl:top-[8.09rem] 2xl:right-[10rem] 2xl:top-[12.09rem] 3xl:right-[14rem] 3xl:top-[18.3rem] 4xl:right-[20rem] 4xl:top-[27.7rem] animate-slide-right"><i class="bi bi-caret-right-fill text-yellow-500"></i></span>
 
         <img class="w-[27rem] h-[10.5rem] md:w-[37.5rem] md:h-[15rem] xl:h-44 xl:w-[442px] 2xl:w-[40rem] 2xl:h-[16rem] 3xl:w-[60rem] 3xl:h-[24rem] 4xl:w-[90rem] 4xl:h-[36rem]" role="img" src="inverter-bat.svg" alt="inverter icon" height="600" width="600">
       </div>
@@ -150,7 +150,7 @@
 
     <template id="modal-loading">
       <div class="loadscr absolute z-[99] top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 text-center pt-5 pb-4 hidden">
-        <div class="inline-block h-8 w-8 animate-[spinner-grow_0.75s_linear_infinite] rounded-full bg-current align-[-0.125em] text-warning opacity-0 motion-reduce:animate-[spinner-grow_1.5s_linear_infinite]" role="status">
+        <div class="inline-block h-8 w-8 animate-ping rounded-full bg-current align-[-0.125em] text-yellow-500 motion-reduce:animate-ping" role="status">
           <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
         </div>
       </div>
