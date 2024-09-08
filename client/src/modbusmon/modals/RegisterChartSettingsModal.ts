@@ -16,13 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import {Modal} from "./Modal.ts";
-import {Datetimepicker} from "tw-elements";
 import {ModalSize} from "../enums/ModalSize.ts";
 import {cloneTemplate} from "../utils.ts";
 
 export class RegisterChartSettingsModal extends Modal {
-    private dateTimePickerStart: HTMLDivElement;
-    private dateTimePickerEnd: HTMLDivElement;
     private startTimeInpt: HTMLInputElement;
     private endTimeInpt: HTMLInputElement;
     private clearTimeIntervalBtn: HTMLButtonElement;
@@ -39,21 +36,10 @@ export class RegisterChartSettingsModal extends Modal {
             zindex: 1056
         });
 
-        const dateTimePickerOpts: any = {
-            datepicker: {format: 'yyyy-mm-dd', startDay: 1},
-            timepicker: {format24: true},
-            disableFuture: true,
-            toggleButton: false
-        };
-
-        this.dateTimePickerStart = this.modalHandle.querySelector<HTMLDivElement>('#chart-dtpick-start')!;
-        this.dateTimePickerEnd = this.modalHandle.querySelector<HTMLDivElement>('#chart-dtpick-end')!;
         this.startTimeInpt = this.modalHandle.querySelector<HTMLInputElement>('#chart-starttm')!;
         this.endTimeInpt = this.modalHandle.querySelector<HTMLInputElement>('#chart-endtm')!;
         this.clearTimeIntervalBtn = this.modalHandle.querySelector<HTMLButtonElement>('#rst-chartintv')!;
 
-        new Datetimepicker(this.dateTimePickerStart, dateTimePickerOpts);
-        new Datetimepicker(this.dateTimePickerEnd, dateTimePickerOpts);
         this.clearTimeIntervalBtn.addEventListener('click', this.onResetIntervalBtnClick.bind(this));
     }
 
