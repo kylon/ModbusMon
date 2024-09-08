@@ -39,6 +39,7 @@ export class ModalsLogic {
     public static show(modal: HTMLDivElement): void {
         const modalBase: HTMLDivElement = modal.querySelector<HTMLDivElement>(':first-child')!;
 
+        modal.dispatchEvent(new Event('show.mbmon.modal'));
         modal.classList.remove('hidden');
         modal.removeAttribute('aria-hidden');
         modal.setAttribute('aria-modal', 'true');

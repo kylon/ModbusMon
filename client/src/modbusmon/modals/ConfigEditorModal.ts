@@ -66,7 +66,7 @@ export class ConfigEditorModal extends Modal {
         this.isDirty = false;
         this.editor = null;
 
-        this.modalHandle.addEventListener('show.te.modal', this.show.bind(this));
+        this.modalHandle.addEventListener('show.mbmon.modal', this.show.bind(this));
         this.reloadBtn.addEventListener('click', this.reloadConfig.bind(this));
         this.saveBtn.addEventListener('click', this.saveConfig.bind(this));
         this.configSelect.addEventListener('change', this.selectConfig.bind(this));
