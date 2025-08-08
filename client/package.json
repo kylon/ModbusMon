@@ -10,17 +10,15 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/dompurify": "^3.0.5",
-    "@types/node": "^22.5.4",
-    "ace-builds": "^1.36.2",
-    "apexcharts": "^3.53.0",
-    "autoprefixer": "^10.4.20",
-    "bootstrap-icons": "^1.11.3",
-    "dompurify": "^3.1.6",
-    "postcss": "^8.4.45",
-    "tailwindcss": "^3.4.10",
-    "typescript": "^5.5.4",
-    "vite": "^5.4.3"
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/node": "^24.2.0",
+    "ace-builds": "^1.43.2",
+    "apexcharts": "^5.3.2",
+    "bootstrap-icons": "^1.13.1",
+    "dompurify": "^3.2.6",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.0"
   },
   "dependencies": {}
 }

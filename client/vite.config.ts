@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 import {defineConfig} from 'vite';
+import tailwindcss from '@tailwindcss/vite'
 
 const noncePlugin = (): any => {
   return {
@@ -52,6 +53,7 @@ export default defineConfig({
     outDir: '../dist/client'
   },
   plugins: [
+      tailwindcss(),
       noncePlugin(),
       ejsIndexPlugin()
   ],

@@ -46,7 +46,7 @@ export class ModalsLogic {
         modal.setAttribute('role', 'dialog');
         modalBase.focus(); // anim trick, better way?
         modalBase.classList.remove('opacity-0');
-        modalBase.classList.add('opacity-100', 'transform-none');
+        modalBase.classList.add('opacity-100', 'translate-none');
         ModalsLogic.modalPageBg.remove('hidden');
         document.body.classList.add('overflow-hidden', 'pr-0');
         ++ModalsLogic.openCount;
@@ -61,7 +61,7 @@ export class ModalsLogic {
         modal.removeAttribute('role');
         modal.setAttribute('aria-hidden', 'true');
         modalBase.focus(); // anim trick, better way?
-        modalBase.classList.remove('opacity-100', 'transform-none');
+        modalBase.classList.remove('opacity-100', 'translate-none');
         modalBase.classList.add('opacity-0');
         --ModalsLogic.openCount;
         delete modal.dataset.mbmonModalOpen;

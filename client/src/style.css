@@ -19,10 +19,25 @@
 @import "ace-builds/css/ace.css";
 @import "ace-builds/css/theme/tomorrow_night_blue.css";
 @import "apexcharts/dist/apexcharts.css";
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+    --color-indigo-1000: rgb(17 24 39);
+    --color-indigo-960: rgb(17, 30, 57);
+    --color-blue-960: rgb(32, 30, 100);
+    --breakpoint-3xl: 2560px; /* 2k */
+    --breakpoint-4xl: 3840px; /* 4k */
+    --shadow-full-box: 0 0px 25px 9px rgba(0, 0, 0, 0.25);
+    --spacing-rpcont-vh: calc(100vh - 4rem - 48px);
+}
+
+.z-1055 {
+    z-index:  1055
+}
+
+.z-1056 {
+    z-index: 1056;
+}
 
 .apexcharts-tooltip {
     background: rgb(17 24 39)!important;

@@ -24,7 +24,7 @@
   </head>
 
   <body class="relative bg-indigo-1000">
-    <div id="loading-scr" class="absolute flex flex-col h-screen w-screen justify-center items-center text-white z-[999] bg-black bg-opacity-50">
+    <div id="loading-scr" class="absolute flex flex-col h-screen w-screen justify-center items-center text-white z-[999] bg-black/50">
       <div class="inline-block h-8 w-8 animate-ping rounded-full bg-current align-[-0.125em] text-blue-800 motion-reduce:animate-ping" role="status">
         <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
       </div>
@@ -47,9 +47,9 @@
         <div class="flex items-center justify-between rounded-t-lg bg-clip-padding px-4 pb-2 pt-2.5">
           <p id="toast-title" class="font-bold text-white"></p>
           <div class="flex items-center text-white">
-            <button type="button" class="ml-2 box-content rounded-none border-none opacity-80 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none" data-mbmon-toast-dismiss aria-label="Close">
+            <button type="button" class="ml-2 box-content rounded-none border-none opacity-80 hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-hidden" data-mbmon-toast-dismiss aria-label="Close">
               <span class="w-[1em] focus:opacity-100 disabled:pointer-events-none disabled:select-none disabled:opacity-25 [&.disabled]:pointer-events-none [&.disabled]:select-none [&.disabled]:opacity-25">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
               </span>
             </button>
           </div>
@@ -129,14 +129,14 @@
     </template>
 
     <template id="modal">
-      <div class="fixed left-0 top-0 hidden h-full w-full overflow-y-auto overflow-x-hidden outline-none" tabindex="-1" aria-hidden="true">
+      <div class="fixed left-0 top-0 hidden h-full w-full overflow-y-auto overflow-x-hidden outline-hidden" tabindex="-1" aria-hidden="true">
         <div data-mbmon-modal-dialog-ref class="shadow-full-box pointer-events-none relative w-auto translate-y-[-50px] opacity-0 transition-all duration-300 ease-in-out">
-          <div class="mcont pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-indigo-800 bg-clip-padding text-current outline-none">
-            <div class="flex flex-shrink-0 items-center justify-between rounded-t-md p-4 bg-indigo-600 text-white">
+          <div class="mcont pointer-events-auto relative flex w-full flex-col rounded-md border-none bg-indigo-800 bg-clip-padding text-current outline-hidden">
+            <div class="flex shrink-0 items-center justify-between rounded-t-md p-4 bg-indigo-600 text-white">
               <h5 class="mtitle flex items-center text-xl font-medium leading-normal gap-1"><span class="mtitle-tx"></span></h5>
 
-              <button type="button" class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none" data-mbmon-modal-dismiss aria-label="Close">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <button type="button" class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-hidden" data-mbmon-modal-dismiss aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -149,7 +149,7 @@
     </template>
 
     <template id="modal-loading">
-      <div class="loadscr absolute z-[99] top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 text-center pt-5 pb-4 hidden">
+      <div class="loadscr absolute z-[99] top-0 left-0 right-0 bottom-0 bg-black/50 text-center pt-5 pb-4 hidden">
         <div class="inline-block h-8 w-8 animate-ping rounded-full bg-current align-[-0.125em] text-yellow-500 motion-reduce:animate-ping" role="status">
           <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
         </div>
@@ -182,7 +182,7 @@
       <div class="flex flex-col h-full">
         <div class="flex flex-row mt-2 mb-2 justify-end items-center me-1">
           <label for="conf-edit-sel" class="mr-2">Select file:</label>
-          <select id="conf-edit-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
+          <select id="conf-edit-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-hidden focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
           <span id="conf-dirtyb" class="hidden whitespace-nowrap rounded-[0.27rem] bg-yellow-500 px-[0.65em] pb-[0.25em] pt-[0.35em] text-center align-baseline text-[0.75em] font-bold leading-none text-orange-950">dirty</span>
         </div>
 
@@ -192,10 +192,10 @@
 
     <template id="modal-configedit-footer">
       <div class="flex flex-col gap-y-1 items-center rounded-b-md p-2 lg:flex-row lg:gap-x-1 lg:gap-y-0">
-        <button id="cfgedit-rld" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-950">
+        <button id="cfgedit-rld" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-hidden focus:ring-0 active:bg-indigo-950">
           <i class="bi bi-arrow-clockwise"></i> Reload from disk
         </button>
-        <button data-mbmon-modal-dismiss id="cfgedit-save" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-950">
+        <button data-mbmon-modal-dismiss id="cfgedit-save" type="button" class="mb-tx inline-block rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-hidden focus:ring-0 active:bg-indigo-950">
           <i class="bi bi-floppy-fill"></i> Save
         </button>
       </div>
@@ -208,17 +208,17 @@
           <button id="showsrvlogs" type="button" class="w-1/2 text-center p-3 bg-indigo-900 hover:bg-indigo-1000"><i class="bi bi-hdd-network"></i> Server</button>
         </div>
 
-        <textarea id="uilogs-area" class="w-full text-white bg-indigo-900 focus:outline-none focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000" rows="20" readonly spellcheck="false"></textarea>
-        <textarea id="srvlogs-area" class="hidden text-white w-full bg-indigo-900 focus:outline-none focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000" rows="20" readonly spellcheck="false"></textarea>
+        <textarea id="uilogs-area" class="w-full text-white bg-indigo-900 focus:outline-hidden focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000" rows="20" readonly spellcheck="false"></textarea>
+        <textarea id="srvlogs-area" class="hidden text-white w-full bg-indigo-900 focus:outline-hidden focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000" rows="20" readonly spellcheck="false"></textarea>
       </div>
     </template>
 
     <template id="modal-logs-footer">
       <div class="flex items-center rounded-b-md p-2">
-        <button id="uilogs-clear" type="button" class="mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
+        <button id="uilogs-clear" type="button" class="mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-hidden focus:ring-0 active:bg-indigo-960 visited:no-underline">
           <i class="bi bi-x-circle"></i> Clear
         </button>
-        <button id="srvlogs-reload" type="button" class="hidden mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
+        <button id="srvlogs-reload" type="button" class="hidden mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-hidden focus:ring-0 active:bg-indigo-960 visited:no-underline">
           <i class="bi bi-arrow-clockwise"></i> Reload
         </button>
       </div>
@@ -231,15 +231,15 @@
       </div>
 
       <div id="chart"></div>
-      <textarea id="chart-tx" class="w-full h-full text-white bg-indigo-900 focus:outline-none focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000 hidden" readonly spellcheck="false"></textarea>
+      <textarea id="chart-tx" class="w-full h-full text-white bg-indigo-900 focus:outline-hidden focus:outline-4 focus:outline-offset-0 focus:outline-indigo-1000 hidden" readonly spellcheck="false"></textarea>
     </template>
 
     <template id="modal-regchart-footer">
       <div class="flex flex-col gap-y-2 items-center rounded-b-md p-2 bg-indigo-900 lg:flex-row lg:gap-y-0 lg:gap-x-2">
-        <button id="upd-rchart" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
+        <button id="upd-rchart" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-hidden focus:ring-0 active:bg-indigo-960 visited:no-underline">
           <i class="bi bi-arrow-clockwise"></i> Reload
         </button>
-        <button id="rchart-sett" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline" data-mbmon-modal-targ="#regchart-sett">
+        <button id="rchart-sett" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-hidden focus:ring-0 active:bg-indigo-960 visited:no-underline" data-mbmon-modal-targ="#regchart-sett">
           <i class="bi bi-gear-fill"></i> Settings
         </button>
       </div>
@@ -249,19 +249,19 @@
       <div class="flex flex-col p-1 gap-y-2">
         <div id="chart-dtpick-start" class="flex flex-col mb-3.5 text-white">
           <label for="chart-starttm" class="mb-2">Start time interval</label>
-          <input id="chart-starttm" type="datetime-local" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md" />
+          <input id="chart-starttm" type="datetime-local" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-hidden focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md" />
         </div>
 
         <div id="chart-dtpick-end" class="flex flex-col mb-3.5 text-white">
           <label for="chart-endtm" class="mb-2">End time interval</label>
-          <input id="chart-endtm" type="datetime-local" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md" />
+          <input id="chart-endtm" type="datetime-local" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-hidden focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md" />
         </div>
       </div>
     </template>
 
     <template id="modal-regchart-sett-footer">
       <div class="flex flex-col gap-y-2 items-center rounded-b-md p-2 bg-indigo-900 lg:flex-row lg:gap-y-0 lg:gap-x-2">
-        <button id="rst-chartintv" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-none focus:ring-0 active:bg-indigo-960 visited:no-underline">
+        <button id="rst-chartintv" type="button" class="inline-block mb-tx rounded-lg bg-indigo-1000 p-4 w-full font-medium leading-normal text-white hover:bg-indigo-960 focus:bg-indigo-960 focus:outline-hidden focus:ring-0 active:bg-indigo-960 visited:no-underline">
           <i class="bi bi-eraser-fill"></i> Clear time interval
         </button>
       </div>
@@ -292,8 +292,8 @@
     <template id="modal-regsort-body">
       <div class="flex flex-col p-4">
         <label id="panel-type" class="mb-2"></label>
-        <select id="regsort-reg-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
-        <select id="regsort-pin-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-none focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
+        <select id="regsort-reg-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-hidden focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
+        <select id="regsort-pin-sel" class="bg-indigo-900 p-1 rounded-md border border-indigo-1000 focus:outline-hidden focus:outline-indigo-1000 focus:outline-offset-0 focus:outline-4 focus:shadow-md mr-2"></select>
       </div>
     </template>
 
