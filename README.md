@@ -12,9 +12,7 @@ a WIP nodejs application to monitor your inverter through modbus tcp
 
 **client requirements:**
 
-- recent browser (tested on firefox, chromium and latest webos tv 5.x chromium 79+)
-
-_Old versions of webos tv 5 and lower are not supported, tizen tvs are not supported._
+- recent browser (tested on firefox and chromium)
 
 **how to build:**
 - run build.sh
@@ -22,9 +20,6 @@ _Old versions of webos tv 5 and lower are not supported, tizen tvs are not suppo
 **how to run:**
 - open a terminal in `dist/server` folder
 - type `yarn start`
-
-**known issues:**
-- web os 5.x does not support secure mode at the moment for unknown reasons
 
 **TODO**
 - other register types (holding is the only one atm)

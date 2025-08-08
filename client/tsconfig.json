@@ -17,10 +17,10 @@
 */
 {
   "compilerOptions": {
-    "target": "es2019",
+    "target": "ES2023",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["es2019", "DOM", "DOM.Iterable"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
     /* Bundler mode */
